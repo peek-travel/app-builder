@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "peekpro-builder",
+  "displayName": "Peek Pro App Builder",
+  "version": "0.1.0",
+  "description": "Build apps that extend the Peek Pro tours & activities platform. Reconciles Peek's app model (install handshake, auth-via-settings, webhooks, Node SDK) with live best practices for your chosen stack.",
+  "author": {
+    "name": "Peek",
+    "url": "https://github.com/peek-travel"
+  },
+  "homepage": "https://github.com/peek-travel/peekpro-builder",
+  "repository": "https://github.com/peek-travel/peekpro-builder",
+  "license": "MIT",
+  "keywords": [
+    "peek",
+    "peek-pro",
+    "peekpro",
+    "booking",
+    "tours",
+    "activities",
+    "app-builder",
+    "integration",
+    "webhooks",
+    "graphql"
+  ]
+}

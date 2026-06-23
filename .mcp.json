@@ -1,0 +1,12 @@
+{
+  "_comment": "Peek Pro build-time MCP server (a.k.a. the 'hybrid layer'). ROLE: build-time helper ONLY — it answers live questions about Peek (current GraphQL schema, webhook/event catalog, install + settings contract, Node SDK surface, what's available to integrate) so the skill never guesses. The apps you build talk to Peek directly at runtime; they do NOT depend on this server. SETUP: point PEEK_MCP_URL at the operator's Peek MCP backend (URL + token are issued by the Peek Development Hub) and set PEEK_MCP_TOKEN. Remote URL (http) form is used on purpose for cross-agent portability (Codex/Cursor read .mcp.json too). STATUS: this backend is under active development. Until it is live, leave PEEK_MCP_URL unset — the skill detects the server is unavailable and falls back to the baked reference files, flagging anything that would normally be a live lookup.",
+  "mcpServers": {
+    "peek-pro": {
+      "type": "http",
+      "url": "${PEEK_MCP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${PEEK_MCP_TOKEN}"
+      }
+    }
+  }
+}
