@@ -26,9 +26,9 @@ installed by Peek Pro clients.
    `TODO(verify)` Development Hub URL and onboarding steps.
 2. **Publish** to the **Peek App Store**. Any Peek Pro client can then install the app.
 3. **Install** — when a client installs, Peek calls the app's **install endpoint** (a
-   webhook the app exposes) with install info. `ASK THE MCP` for the exact install payload
-   shape (expected fields: app id, account/merchant id, environment, scopes, auth token(s)).
-   `TODO(verify)` install endpoint contract and required HTTP response.
+   webhook the app exposes) with install info, including the **three IDs** below and auth
+   token(s). `ASK THE MCP` for the exact install payload shape (the field keys, environment,
+   scopes). `TODO(verify)` install endpoint contract and required HTTP response.
 4. **Configure** — the client customizes the app via **settings**. **Auth tokens are
    delivered through this channel**, so the app always knows *which account/user* is calling.
    `ASK THE MCP` for the settings schema and token format/refresh rules.
@@ -43,6 +43,33 @@ installed by Peek Pro clients.
   scope/permission model. `TODO(verify)` how sandbox vs. production credentials differ.
 - Store tokens as **secrets** (never in the repo, never in client-side code). See the
   stack reference for where secrets live on the chosen platform.
+
+## Identity & data scoping: the three IDs (important — design around this)
+
+On **install** and on **every access**, Peek passes the app three identifiers. Account for
+all three (these are confirmed; `ASK THE MCP` only for the exact payload **field names**):
+
+- **User ID** — the current user accessing or installing the app (who is acting right now).
+- **Partner ID** (also called **Account ID**) — the Peek Pro **account** the app is installed
+  into.
+- **Install ID** — the unique **account+app** identifier. **It does NOT rotate:** uninstall
+  then reinstall yields the **same** Install ID.
+
+### Strongly recommended: scope data to an `installDataId`, tracked as `currentInstallDataId`
+
+Because the Install ID is stable across reinstalls, keying your data on the Install ID alone
+means a reinstalled app inherits **stale data** from the previous install. Instead:
+
+- At each install, mint an **`installDataId` = Install ID + install timestamp**.
+- Store it on an account object as **`currentInstallDataId`**, and **scope all of the app's
+  and install's data to that `installDataId`**.
+- On reinstall, a **new** `installDataId` is created, so the user **starts with a clean
+  slate** (old data is no longer referenced by `currentInstallDataId`).
+- A **post-uninstall data wiper** then knows exactly which data to remove: everything tied to
+  the prior `installDataId`.
+
+This pattern gives clean reinstalls and unambiguous data cleanup. Build it in from the start —
+retrofitting data scoping later is painful.
 
 ## The two surfaces every app has
 

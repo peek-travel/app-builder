@@ -101,7 +101,8 @@ With the stack and purpose known, gather everything needed and draft a concrete 
 
 Then write the **plan**: recommended architecture; how it maps onto Peek's app model
 (install endpoint, settings/auth, the two surfaces, which webhooks vs. SDK calls); the data
-model; security/PII approach; any conflicts from the language gate; and the **list of
+model **scoped to an `installDataId`** (see the identity/data-scoping rule below and in
+`peek-api.md`); security/PII approach; any conflicts from the language gate; and the **list of
 accounts and keys the user will need to acquire**.
 
 ### 4. Get sign-off
@@ -146,6 +147,11 @@ suggesting production. Confirm secrets aren't committed and PII handling matches
 - **Prefer the Node SDK; avoid raw GraphQL.** Raw GraphQL against an installed account is
   risky. If no SDK exists for the chosen language, warn rather than quietly hand-roll it.
 - **Treat Peek data as sensitive PII.** Security-first choices for storage, logging, transit.
+- **Scope all app data to an `installDataId`.** Peek passes three IDs (user ID, partner/
+  account ID, install ID); the **install ID does not rotate across reinstalls**. Mint
+  `installDataId = install ID + timestamp`, track it as `currentInstallDataId` on the account,
+  and scope every record to it — so reinstalls start clean and an uninstall wiper knows what
+  to delete. See `peek-api.md` "Identity & data scoping."
 - **Don't invent Peek endpoint/schema/event details.** If it's volatile, ask the MCP; if the
   MCP is down, flag it as TODO-verify. Stable rules live in `references/`.
 - **Don't build before sign-off (step 4), and don't gather the app's purpose before the
