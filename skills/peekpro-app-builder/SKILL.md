@@ -33,7 +33,7 @@ Your job is **synthesis**, not recital. Three sources of truth meet at build tim
    integration data: current GraphQL schema, webhook/event catalog, install + settings
    payload shapes, Node SDK surface, "what's available to integrate right now." This lives
    in the **MCP**, not the references, so the skill never goes stale. Query it for anything
-   marked "ask the MCP."
+   marked "ASK THE MCP."
 
 Produce **one correct, opinionated recommendation** by reconciling all three, and **surface
 conflicts honestly** (e.g. "you picked a Python/Django host, but the only Peek SDK is Node —
@@ -41,73 +41,103 @@ here's the risk and what I'd change").
 
 ## Procedure
 
-Follow these steps in order. Do not skip step 1.
+Follow these steps in order. Do not skip steps 1 and 2, and do not build before sign-off
+(step 4).
 
-### 1. Gather the stack UP FRONT (ask, don't assume)
+### 1. Stack & technology FIRST (ask before anything else)
 
-Ask the user, before writing anything:
+Before discussing the app itself, ask the user what they want to build on:
 
-- **Language / framework** — what they want to build in.
-- **Hosting platform** — e.g. Vercel, Firebase, Fly.io, Cloudflare, AWS, Render, …
-- **Database** — e.g. Supabase/Postgres, Firestore, PlanetScale/MySQL, Mongo, …
+- **Language / framework**
+- **Hosting platform** (e.g. Vercel, Firebase, Fly.io, Cloudflare, AWS, …)
+- **Database** (e.g. Supabase/Postgres, Firestore, PlanetScale, …)
+
+**If the user is unsure or has no preference, recommend this default and explain why in a
+line or two:**
+
+> **Next.js (React + TypeScript) on Vercel, with Supabase (Postgres) for data — and React
+> client components + Supabase Realtime for any real-time features** (e.g. a live-updating
+> waitlist or availability view).
+
+This default is deliberate: Next.js is **Node/TypeScript**, so it gets Peek's first-class
+**Node SDK**; Vercel + Supabase are fast to stand up and have strong defaults; React/Supabase
+Realtime covers live UI when the app needs it.
 
 Then apply the **language gate**:
 
-- **Node/TypeScript is first-class.** Peek currently ships its API-translation SDK for
-  **Node only**. Strongly prefer it. Load `references/node.md`.
-- **Any other language (Python, Ruby/Rails, Go, …):** there is **no Peek SDK yet**, which
-  means talking to Peek would require **raw GraphQL — which Peek explicitly discourages**
-  because misuse can harm the installed account's infrastructure. **Warn the user clearly**,
-  explain the trade-off, and recommend Node. If they still proceed, load the matching
-  `references/<lang>.md` stub and treat raw-GraphQL guidance as best-effort with caveats.
+- **Node/TypeScript is first-class** (the default above satisfies this). Peek currently ships
+  its API-translation SDK for **Node only**. Strongly prefer it.
+- **Any other language (Python, Ruby/Rails, Go, …):** there is **no Peek SDK yet**, so
+  talking to Peek means **raw GraphQL — which Peek explicitly discourages** (misuse can harm
+  the installed account's infrastructure). **Warn the user clearly**, explain the trade-off,
+  and recommend Node. If they still proceed, continue with caveats.
 
-### 2. Load only what you need (progressive disclosure)
+### 2. Identify the app's purpose
 
-Read these reference files with the Read tool — only the ones that apply, to keep context lean:
+Now ask **what they're trying to accomplish** — the feature/problem (waitlist, abandoned-
+booking recovery, dynamic pricing, custom checkout, reporting, …), who uses it, and what
+should trigger it. Get enough detail to design: the user-facing behavior, the events that
+drive it, and what it needs to read or change in Peek.
 
-- **Always:** `references/peek-api.md` — the Peek app model, auth, resources, webhooks, SDK,
-  GraphQL caution. This is the fixed layer.
-- **Matching stack only:** `references/node.md` (preferred) or `references/python.md` /
-  `references/rails.md` (with warnings per step 1).
-- **When building UI:** `references/design-guidelines.md` — Peek's design/style conventions.
+### 3. Research and assemble the plan
 
-Do **not** preload every reference. Load on demand.
+With the stack and purpose known, gather everything needed and draft a concrete plan:
 
-### 3. Research the moving layer (live, every build)
+- **Load references on demand (progressive disclosure)** — read with the Read tool, only
+  what applies, to keep context lean:
+  - **Always:** `references/peek-api.md` (the fixed Peek rules).
+  - **Matching stack:** `references/node.md` (preferred) or `references/python.md` /
+    `references/rails.md`.
+  - **If building UI:** `references/design-guidelines.md`.
+- **Hybrid layer — query the Peek MCP for live facts this purpose needs:** which
+  **webhooks/events** fire for the feature, which **APIs / SDK methods / tools** are
+  available, the relevant **schema**, and the install/settings/auth contract. These are the
+  `ASK THE MCP` markers in the references — never guess them. If the MCP is **unconfigured or
+  unreachable**, fall back to the references and **flag each would-be lookup** as "verify
+  against the Peek MCP / Development Hub before shipping."
+- **Moving layer — research current best practices live:** web-search the up-to-date,
+  security-first setup for the chosen stack/host (project structure, secrets, deployment).
+  Peek data can include **sensitive PII**, so weigh storage/logging/transit carefully.
 
-Web-search for **current** best practices for the user's exact stack at build time —
-project structure, secrets management, deployment, and especially **security**, because
-Peek data can include **sensitive PII** (guest names, contact info, payment metadata).
-Platform specifics (Vercel/Firebase/Fly/…) change constantly and are deliberately **not**
-baked into references — look them up now. Prefer official docs from the last ~12 months.
+Then write the **plan**: recommended architecture; how it maps onto Peek's app model
+(install endpoint, settings/auth, the two surfaces, which webhooks vs. SDK calls); the data
+model; security/PII approach; any conflicts from the language gate; and the **list of
+accounts and keys the user will need to acquire**.
 
-### 4. Query the hybrid layer (the Peek MCP) for live Peek facts — never guess
+### 4. Get sign-off
 
-For anything Peek-specific that changes — **current GraphQL schema, the webhook/event
-catalog and payload shapes, the install/settings contract, the Node SDK surface, what's
-available to integrate** — call the bundled **`peek-pro` MCP** instead of inventing it.
-The references mark these spots with **"ASK THE MCP."**
+Present the plan and get the user's **explicit approval before building**. Incorporate their
+feedback and revise until they sign off.
 
-If the MCP is **not configured or unreachable** (the backend is still in development): say
-so, fall back to the baked references, and **explicitly flag every value that would normally
-be a live lookup** as "verify against the Peek MCP / Development Hub before shipping." Never
-silently fill a TODO with a guess.
+### 5. Build the app AND onboard the user — in parallel
 
-### 5. Reconcile → recommend → build
+Once signed off, run **two tracks at the same time**. Do **not** block the build waiting for
+the user to finish creating accounts.
 
-1. State the recommended architecture in a few lines: stack + how it maps onto Peek's app
-   model (install endpoint, settings/auth, which surfaces, webhooks vs. SDK calls).
-2. Call out any **conflicts** from the language gate or security review.
-3. Scaffold the project following the stack reference + your live research.
-4. Wire Peek integration per `peek-api.md` (SDK over raw GraphQL; auth from settings; verify
-   webhook signatures; never build your own login).
-5. Build **both surfaces** the app needs: the **client-facing** side (installed per Peek
-   account) and the **admin** side (for the app developer — installs, logs, ops).
+- **Track A — build (you, in the background):** scaffold and implement the app per the plan,
+  the stack reference, and your live research. Wire Peek integration per `peek-api.md` (SDK
+  over raw GraphQL; identity from install settings; verify webhook signatures; never build
+  your own login). Build **both surfaces**: the **client-facing** app (installed per Peek
+  account) and the **admin** surface (for the developer — installs, logs, ops). Use
+  placeholders/env vars for any secret the user is still acquiring so the build keeps moving.
+- **Track B — onboarding walkthrough (the user, in parallel):** give the user a clear,
+  ordered checklist of what *they* must set up by hand, interleaved with your progress:
+  - **Vercel** — create the account/project; how to connect the repo and configure env vars.
+  - **Supabase** — create the project; where to get the project URL and the anon/service
+    keys; basic schema/RLS setup.
+  - **Peek credentials** — obtain Development Hub access; the **build-time MCP** values
+    (`PEEK_MCP_URL`, `PEEK_MCP_TOKEN`); and understand that the **app's** Peek auth tokens
+    arrive at runtime via the install/settings flow (not a login the user creates).
+  - **Other API/secret keys** the plan calls for, and **where each one goes** (the host's
+    secret store / env — never committed).
+
+  Keep the tracks in sync: whenever your code starts needing a given account or key, make
+  sure the user has the matching setup step in front of them.
 
 ### 6. Validate
 
 Where the MCP supports it, validate generated calls against a **sandbox** account before
-suggesting production. Confirm secrets are not committed and PII handling matches step 3.
+suggesting production. Confirm secrets aren't committed and PII handling matches the plan.
 
 ## Hard rules (do not violate)
 
@@ -118,6 +148,8 @@ suggesting production. Confirm secrets are not committed and PII handling matche
 - **Treat Peek data as sensitive PII.** Security-first choices for storage, logging, transit.
 - **Don't invent Peek endpoint/schema/event details.** If it's volatile, ask the MCP; if the
   MCP is down, flag it as TODO-verify. Stable rules live in `references/`.
+- **Don't build before sign-off (step 4), and don't gather the app's purpose before the
+  stack (steps 1 → 2).**
 
 ## Agent-neutral note
 
