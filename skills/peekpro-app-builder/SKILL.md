@@ -39,6 +39,16 @@ Produce **one correct, opinionated recommendation** by reconciling all three, an
 conflicts honestly** (e.g. "you picked a Python/Django host, but the only Peek SDK is Node —
 here's the risk and what I'd change").
 
+## How to interact (applies to every step)
+
+**Always ask when something is unclear — never guess or assume.** Whenever the goal, scope,
+stack, a Peek detail, or the right approach is ambiguous, stop and ask the user.
+
+**Ask one question at a time.** Pose a single question, share the relevant options and your
+recommendation, and let the user chat it through with you before moving on. Don't batch
+several questions into one message — a back-and-forth conversation per question produces
+better answers than a long questionnaire. Only proceed once the current question is resolved.
+
 ## Procedure
 
 Follow these steps in order. Do not skip steps 1 and 2, and do not build before sign-off
@@ -156,6 +166,8 @@ suggesting production. Confirm secrets aren't committed and PII handling matches
   MCP is down, flag it as TODO-verify. Stable rules live in `references/`.
 - **Don't build before sign-off (step 4), and don't gather the app's purpose before the
   stack (steps 1 → 2).**
+- **When unclear, ask — one question at a time.** Never assume; let the user discuss each
+  question and its options with you before moving on (see "How to interact").
 
 ## Agent-neutral note
 
