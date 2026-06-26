@@ -40,12 +40,36 @@ structure, secrets management, deployment, real-time wiring if needed. Peek data
 **sensitive PII**, so weigh storage/logging/transit. Prefer official docs from the last ~12
 months. Platform specifics are intentionally not baked into references — look them up now.
 
-## 3d. Write the plan
+## 3d. Map the data flow (do this as rigorously as the UI)
 
-Use `plan-template.md` in this folder as the structure. The plan must cover:
+Planning has **two equally important halves.** Step 2 mocked the **UI**; now map the **data
+flow** — it is just as important, often more. For **every** piece of data the app needs, pin
+down:
+
+- **Source** — does it come from Peek (which **API/SDK call**, or which **webhook payload
+  field** / npm model field), or is it app-generated/derived?
+- **When** — at what point is it requested or received (on install, on a webhook, on a user
+  action, on a schedule)?
+- **Storage** — where and how is it stored (which table/collection + fields, scoped to
+  `installDataId`, keyed on **normalized** booking/order IDs where relevant)?
+
+**Verify availability — never assume.** Confirm each Peek-sourced field actually exists and is
+obtainable via the **API / SDK / npm package / webhook payload**, using the MCP and the live
+docs (and the npm package's models + standard webhook query). If something you assumed isn't
+available, find the real source or change the design **now**.
+
+> Why this matters: an app built on the assumption that a field is available — when it isn't —
+> simply won't work. Catch that at planning time, not after it's built. **Don't guess data
+> availability.**
+
+## 3e. Write the plan
+
+Use `plan-template.md` in this folder as the structure. The plan must cover **both the UI and
+the data flow**:
 
 - recommended **architecture** and how it maps onto Peek's app model (install endpoint,
   settings/auth, the two surfaces, which webhooks vs. SDK calls);
+- the **data-flow map** from 3d (each item: source → when → storage → **verified available?**);
 - the **data model**, explicitly **scoped to an `installDataId`** (`currentInstallDataId` on
   the account object);
 - **security/PII** approach for the chosen host;

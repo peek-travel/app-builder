@@ -69,7 +69,7 @@ steps 1–2, and don't build before sign-off (step 4).
 | --- | --- | --- |
 | 1 | `steps/step-1-stack-selection/step.md` | Ask the stack/tech first; recommend a default if unsure; apply the Node-first language gate. |
 | 2 | `steps/step-2-app-purpose/step.md` | Discover what the app should accomplish, then iteratively generate an interactive Odyssey `index.html` mockup for the user to review (uses `mockup-template.html`). |
-| 3 | `steps/step-3-research-and-plan/step.md` | Load references, query the MCP, research the stack live, and draft the plan (uses `plan-template.md`). |
+| 3 | `steps/step-3-research-and-plan/step.md` | Load references, query the MCP, research the stack live, and draft the plan — **both UI and a verified data-flow map** (uses `plan-template.md`). |
 | 4 | `steps/step-4-sign-off/step.md` | Present the plan and get explicit user approval before building. |
 | 5 | `steps/step-5-build-and-onboard/step.md` | Build the app (Track A) **in parallel** with walking the user through account/secret setup (Track B; uses `onboarding-checklist.md`). |
 | 6 | `steps/step-6-validate/step.md` | Validate against a Peek sandbox; confirm secrets and PII handling. |
@@ -95,6 +95,10 @@ building UI).
   and scope every record to it. See `references/peek-api.md` "Identity & data scoping."
 - **Don't invent Peek endpoint/schema/event details.** If it's volatile, ask the MCP; if the
   MCP is down, flag it as TODO-verify. Stable rules live in `references/`.
+- **Plan the data flow, not just the UI — and verify data availability.** Map exactly which
+  data comes from Peek (which API/SDK call or webhook field), when, and where it's stored — and
+  **confirm each field is actually available** via the API/SDK/npm package before building.
+  Never assume data exists; an app built on absent data won't work.
 - **Don't build before sign-off (step 4), and don't gather the app's purpose before the
   stack (steps 1 → 2).**
 - **When unclear, ask — one question at a time.** Never assume (see "How to interact").
