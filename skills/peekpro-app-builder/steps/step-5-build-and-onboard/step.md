@@ -15,12 +15,15 @@ step-3 research. Follow the fixed-layer rules from `references/peek-api.md`:
   (user ID, partner/account ID, install ID).
 - **Scope all data to `installDataId`** (`currentInstallDataId` on the account object).
 - **SDK over raw GraphQL** (Node SDK preferred; warn if the stack forces raw GraphQL).
-- **Webhooks (if used):** implement the endpoint(s) per `references/webhooks.md` — register
-  in the registry, verify signatures, ack fast, idempotent handlers. Use the npm package's
-  standard GraphQL query + booking-model parser (Node). Remember booking events carry
-  **state, not change**: maintain a seen-before store keyed on the never-changing
-  **booking/order IDs** (scoped to `installDataId`) to derive created/cancelled/rescheduled,
-  and compare stored field values to detect specific changes.
+- **Webhooks (if used):** implement the endpoint(s) per `references/webhooks.md` — and
+  **pull the live webhook doc** it links for the exact current config/parser API. Register in
+  the registry/app config, **verify the delivery yourself** (the package won't), ack fast,
+  idempotent handlers. Use the npm package's standard booking query + `parseBookingWebhook` /
+  `parseWaiverWebhook` parsers (Node); validate fields you rely on (parsers return empty
+  fields, don't throw). Remember booking events carry **state, not change**: maintain a
+  seen-before store keyed on the never-changing, **normalized** booking/order IDs (scoped to
+  `installDataId`) to derive created/cancelled/rescheduled, and compare stored field values to
+  detect specific changes.
 - Build **both surfaces**: the **client-facing** app (installed per Peek account) and the
   **admin** surface (installs, logs, ops for the developer).
 - **Build the UI with Odyssey** — the same `<ody-*>` components used for the step-2 mockup
