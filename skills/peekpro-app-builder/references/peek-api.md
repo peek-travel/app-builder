@@ -33,10 +33,14 @@ installed by Peek Pro clients.
    delivered through this channel**, so the app always knows *which account/user* is calling.
    `ASK THE MCP` for the settings schema and token format/refresh rules.
 
-## Authentication (hard rule: use Peek's, never your own)
+## Authentication (client-facing surface: use Peek's, never your own)
 
-- The app **must not implement its own login / user accounts**. Identity and authorization
-  come from Peek via the install + settings flow.
+> **Scope:** this rule is about the **client-facing surface** — the part of the app installed
+> within Peek Pro and accessed by Peek Pro users. The **admin** surface (for the app
+> developer/owner) is separate and **may have its own auth** (see "The two surfaces").
+
+- The **client-facing app must not implement its own login / user accounts**. Identity and
+  authorization come from Peek via the install + settings flow.
 - Each install hands the app **auth token(s)** scoped to that account. The app uses them to
   call Peek and to identify the caller.
 - `ASK THE MCP` for: token type (e.g. bearer/OAuth), lifetime, refresh mechanism, and the
@@ -78,8 +82,12 @@ retrofitting data scoping later is painful.
 2. **Admin surface** — for the **app developer/owner**: view installs, read logs, monitor
    health, manage configuration across accounts.
 
-Build both. Keep their auth/permissions separate: the admin surface is the developer's;
-the client surface acts on behalf of the installing account.
+Build both. Keep their auth/permissions separate:
+- **Client-facing surface** — acts on behalf of the installing account; identity comes from
+  Peek (no own login — see Authentication above).
+- **Admin surface** — the developer's own area; it is **not** installed inside Peek Pro and is
+  **not** accessed by Peek Pro users, so it **may use its own authentication** (the
+  developer's login/SSO). The "no own login" rule does **not** apply here.
 
 ## Talking to Peek: two mechanisms
 

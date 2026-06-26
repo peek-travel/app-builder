@@ -81,8 +81,11 @@ building UI).
 
 ## Hard rules (do not violate)
 
-- **Never build the app's own login/auth.** Identity comes from Peek via the install
-  settings/token. The app always knows who's calling because Peek tells it.
+- **Never build your own login/auth for the client-facing surface.** The part of the app
+  **installed within Peek Pro and accessed by Peek Pro users** gets identity from Peek via the
+  install settings/token — it must not implement its own login. **This applies only to that
+  client-facing surface.** The separate **admin** surface (for the app developer/owner) **may
+  have its own auth** — this rule does not constrain it.
 - **Prefer the Node SDK; avoid raw GraphQL.** Raw GraphQL against an installed account is
   risky. If no SDK exists for the chosen language, warn rather than quietly hand-roll it.
 - **Treat Peek data as sensitive PII.** Security-first choices for storage, logging, transit.

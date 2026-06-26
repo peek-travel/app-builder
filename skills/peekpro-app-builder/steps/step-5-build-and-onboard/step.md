@@ -11,8 +11,10 @@ build while the user creates accounts.
 Scaffold and implement the app per the plan, the matching `references/<stack>.md`, and your
 step-3 research. Follow the fixed-layer rules from `references/peek-api.md`:
 
-- **Auth from install settings/token — never build your own login.** Handle the three IDs
-  (user ID, partner/account ID, install ID).
+- **Client-facing surface: auth from install settings/token — never build your own login**
+  (it's installed in Peek Pro, accessed by Peek Pro users). Handle the three IDs (user ID,
+  partner/account ID, install ID). The **admin surface may have its own auth** — the no-login
+  rule applies only to the client-facing part.
 - **Scope all data to `installDataId`** (`currentInstallDataId` on the account object).
 - **SDK over raw GraphQL** (Node SDK preferred; warn if the stack forces raw GraphQL).
 - **Webhooks (if used):** implement the endpoint(s) per `references/webhooks.md` — and

@@ -29,12 +29,14 @@ Provide routes/controllers for: **install endpoint**, **webhook endpoint**, the
 `ASK THE MCP` for the current GraphQL endpoint + schema. Keep operations minimal; flag the
 raw-GraphQL risk per the warning above.
 
-## 3. Auth wiring (use Peek identity — never your own login / Devise)
+## 3. Auth wiring (client-facing surface: use Peek identity — never your own login / Devise)
 
 - On **install**, store the account id + Peek-issued token (`ASK THE MCP` for payload shape),
   e.g. an `Installation` model keyed by account, tokens in encrypted credentials.
 - Build a per-account authorized client from the stored token. Identify the caller from
-  Peek's settings/token — **do not** add Devise/your own auth.
+  Peek's settings/token — for the client-facing surface, **do not** add Devise/your own auth.
+- This applies to the **client-facing** surface only. The **admin** surface (developer's own
+  area, not installed in Peek Pro) **may** use its own auth (e.g. Devise/SSO).
 
 ## 4. Webhooks, secrets, PII
 

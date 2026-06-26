@@ -26,11 +26,13 @@ pip install httpx  # or gql — TODO(verify) any Peek-recommended client
 `ASK THE MCP` for the current GraphQL endpoint + schema. Keep queries narrow; avoid
 expensive/mutating operations unless necessary, and flag risk per the warning above.
 
-## 3. Auth wiring (use Peek identity — never your own login)
+## 3. Auth wiring (client-facing surface: use Peek identity — never your own login)
 
 - Persist the account id + token from Peek's **install** payload (`ASK THE MCP` for shape).
 - Build an authorized client per account from the stored token. Identify the caller from
   Peek's settings/token, not a local user model.
+- This applies to the **client-facing** surface only. The **admin** surface (developer's own
+  area, not installed in Peek Pro) **may** use its own auth.
 
 ## 4. Example call
 
