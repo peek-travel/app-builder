@@ -92,7 +92,14 @@ placeholder** until Peek's design system is published.
 ├── .mcp.json                # remote Peek MCP server config (PEEK_MCP_URL / PEEK_MCP_TOKEN)
 ├── skills/
 │   └── peekpro-app-builder/
-│       ├── SKILL.md         # the reconciliation procedure (stack-agnostic orchestrator)
+│       ├── SKILL.md         # lean orchestrator: three layers + the step index
+│       ├── steps/           # one folder per step (loaded on demand; holds artifacts)
+│       │   ├── step-1-stack-selection/step.md
+│       │   ├── step-2-app-purpose/step.md
+│       │   ├── step-3-research-and-plan/step.md   + plan-template.md
+│       │   ├── step-4-sign-off/step.md
+│       │   ├── step-5-build-and-onboard/step.md   + onboarding-checklist.md
+│       │   └── step-6-validate/step.md
 │       └── references/
 │           ├── peek-api.md          # canonical Peek app/API knowledge (fixed layer)
 │           ├── node.md              # Node/TS build guide (preferred)
