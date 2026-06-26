@@ -22,6 +22,25 @@ the doc doesn't pin it).
 
 Two webhooks: **booking events** and **waiver events** (details below).
 
+## Language note: Node/JS package vs. other stacks
+
+The npm package (`@peektravel/app-utilities`) and **everything it provides — the standard
+booking GraphQL query, `parseBookingWebhook`, `parseWaiverWebhook`, the models — are for
+**Node / JavaScript / TypeScript** (the first-class stack).
+
+**If the user builds in another language (Python, Ruby, Go, …), there is no package to
+install.** Instead, **use the package's code as the reference example and template** for a
+correct integration in that stack:
+
+- Read the live doc *and* inspect the package's source to see exactly what the standard
+  booking query selects and how each parser maps the payload into its model.
+- **Port that behavior** into the chosen language: register the same field selection, and
+  reimplement the parsing/normalization (including the booking/order ID normalization and the
+  "events carry state, not change" handling) to match what the Node parsers do.
+- Treat the Node implementation as the **canonical spec** to mirror — don't invent a different
+  parsing contract. (And recall the broader language gate: non-Node also means raw GraphQL
+  elsewhere, which Peek discourages — warn the user; see `SKILL.md`.)
+
 ## How webhooks are wired (two halves, deliberately split)
 
 Setup has two parts that must agree with each other:

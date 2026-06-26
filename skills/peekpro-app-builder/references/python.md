@@ -41,7 +41,11 @@ expensive/mutating operations unless necessary, and flag risk per the warning ab
 
 ## 5. Webhooks, secrets, PII
 
-- Verify webhook signatures (`ASK THE MCP` for scheme); make handlers idempotent.
+- See `references/webhooks.md` for the full contract. The npm parsers + standard query are
+  **Node-only** — in Python, **port them as a template**: replicate the package's booking
+  GraphQL field selection and its payload→model parsing (incl. ID normalization and the
+  "events carry state, not change" handling). Treat the Node code as the canonical spec.
+- Verify the delivery yourself (`ASK THE MCP` for scheme); make handlers idempotent.
 - Use the host's secret store; never commit tokens. Treat guest/payment data as sensitive
   PII (see `peek-api.md`).
 
