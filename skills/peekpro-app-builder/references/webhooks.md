@@ -72,6 +72,11 @@ To derive meaning, the app must track state itself:
 
 - **The booking ID and the order ID never change.** Use them as the keys for caches,
   databases, and lookups. (Combine with `installDataId` scoping.)
+- **Normalize IDs before using them as keys.** Booking/order IDs have two formats — internal
+  `b_123abc`/`o_123abc` (lowercase + underscore) and display `B-123ABC`/`O-123ABC` (uppercase
+  + dash). Always convert any ID you receive to the **internal lowercase-underscore form
+  first** (lowercase + replace `-` with `_`) so your store keys match. See `peek-api.md`
+  "Booking & order ID formats."
 
 ---
 

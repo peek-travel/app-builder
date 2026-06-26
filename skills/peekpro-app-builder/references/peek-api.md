@@ -113,6 +113,22 @@ app implements.
   and how SDK calls map to operations.
 - For non-Node languages, see the language stub and the warning in `SKILL.md` step 1.
 
+## Booking & order ID formats — normalize on input
+
+Booking and order IDs come in **two representations**:
+
+- **Internal / canonical** — lowercase with an underscore: **`b_123abc`** (booking),
+  **`o_123abc`** (order).
+- **Display** — uppercased with a dash (easier for humans): **`B-123ABC`** (booking),
+  **`O-123ABC`** (order).
+
+**Whenever you receive a booking or order ID — from the API, a webhook, a URL, user input,
+anywhere — normalize it to the internal lowercase-underscore form *first*** (lowercase the
+whole string and replace `-` with `_`, e.g. `B-123ABC` → `b_123abc`). Store, compare, and key
+caches/DBs/lookups on the **canonical** form; use the display form **only** for showing to
+humans. Mixing the two formats as keys causes duplicate or missed records — and remember these
+IDs never change, so they're your stable keys (scope them to `installDataId`).
+
 ## Core resources (structure — confirm specifics live)
 
 Peek's domain centers on these. **Field-level and endpoint/operation specifics are
