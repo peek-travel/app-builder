@@ -4,6 +4,10 @@
 the app itself. Everything downstream (which reference loads, the language gate, the security
 research) depends on this.
 
+> First-time kickoff: if you haven't already, give the user a **very short bulleted overview
+> of all the steps** (see SKILL.md) and ask whether they'd like to do anything differently —
+> then start here.
+
 > Interaction rule: ask **one question at a time** and let the user discuss options with you.
 > Don't move to step 2 until the stack is settled.
 

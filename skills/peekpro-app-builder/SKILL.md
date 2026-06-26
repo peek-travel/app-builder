@@ -55,6 +55,11 @@ The full instructions live under `steps/`, one folder per step. Each folder cont
 `step.md` with everything about that step — and room for **artifacts/templates** (plan
 templates, checklists, schemas, scripts) used by that step.
 
+**Kickoff (do this first, before step 1):** when the skill is first initiated, give the user
+a **very short bulleted overview of all the steps below** (one line each) and **ask if they
+want to do anything differently** (skip, reorder, add emphasis). Adjust to their answer, then
+begin step 1.
+
 **How to run them:** do the steps in order. **When you begin a step, `Read` that step's
 `step.md` first**, then follow it. Load only the current step's file (and the references it
 points to) to keep context lean — this is the progressive-disclosure pattern. Don't skip
