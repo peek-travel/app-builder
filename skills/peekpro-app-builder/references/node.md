@@ -27,12 +27,14 @@ npm install <peek-node-sdk-package>
 
 `ASK THE MCP` for: package name, current version, and the client's method surface.
 
-## 3. Auth wiring (identity comes from Peek — never build your own login)
+## 3. Auth wiring (client-facing surface: identity comes from Peek — never build your own login)
 
 - On **install**, persist the account id + the issued token(s) from Peek's install payload
   into your secret store, keyed by account. `ASK THE MCP` for the install payload shape.
 - On each request/webhook, resolve the calling account and load its token to construct the
   SDK client. Identify the caller from Peek's settings/token, not a local user table.
+- This applies to the **client-facing** surface only. The **admin** surface (the developer's
+  own area, not installed in Peek Pro) **may** use its own auth.
 
 ```ts
 // Shape is illustrative — ASK THE MCP for the real SDK client + auth options.
