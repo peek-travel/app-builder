@@ -1,0 +1,26 @@
+{
+  "name": "peek-pro",
+  "owner": {
+    "name": "Peek"
+  },
+  "description": "Peek Pro's catalog of Claude Code plugins for building apps on the Peek Pro platform.",
+  "plugins": [
+    {
+      "name": "peekpro-builder",
+      "source": "./",
+      "description": "Build Peek Pro extension apps: scaffolds the right stack, bakes in Peek's app model (install handshake, auth-via-settings, webhooks, Node SDK), and reconciles it with live best practices for your hosting/database.",
+      "version": "0.1.0",
+      "category": "development",
+      "keywords": [
+        "peek",
+        "peek-pro",
+        "booking",
+        "tours",
+        "activities",
+        "integration",
+        "app-builder"
+      ],
+      "license": "MIT"
+    }
+  ]
+}
