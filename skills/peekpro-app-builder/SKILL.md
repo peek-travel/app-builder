@@ -63,7 +63,7 @@ steps 1–2, and don't build before sign-off (step 4).
 | Step | Folder | What it covers |
 | --- | --- | --- |
 | 1 | `steps/step-1-stack-selection/step.md` | Ask the stack/tech first; recommend a default if unsure; apply the Node-first language gate. |
-| 2 | `steps/step-2-app-purpose/step.md` | Discover what the app should accomplish, who uses it, what triggers it. |
+| 2 | `steps/step-2-app-purpose/step.md` | Discover what the app should accomplish, then iteratively generate an interactive Odyssey `index.html` mockup for the user to review (uses `mockup-template.html`). |
 | 3 | `steps/step-3-research-and-plan/step.md` | Load references, query the MCP, research the stack live, and draft the plan (uses `plan-template.md`). |
 | 4 | `steps/step-4-sign-off/step.md` | Present the plan and get explicit user approval before building. |
 | 5 | `steps/step-5-build-and-onboard/step.md` | Build the app (Track A) **in parallel** with walking the user through account/secret setup (Track B; uses `onboarding-checklist.md`). |

@@ -1,0 +1,81 @@
+<!doctype html>
+<!--
+  Peek Pro app mockup — single-file starter (step 2).
+  Copy into the user's project as index.html and build the proposed app's UI here.
+
+  BEFORE editing: read the current Odyssey component docs (tags, attributes, conventions):
+  https://cdn.jsdelivr.net/npm/@peektravel/app-utilities/docs/ui.md
+
+  Conventions (from ui.md):
+   - scalars (strings/booleans) -> HTML attributes
+   - rich data (arrays/objects)  -> set as JS properties on the element (el.columns = [...])
+   - events are CustomEvents     -> addEventListener(..., e => e.detail)
+   - wrap page/settings UI in <ody-page-container>
+  When unsure about a layout/flow, keep MULTIPLE variants in this one file (see the tabs
+  below) so the user can compare, then collapse to the chosen direction.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Peek Pro app mockup</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@peektravel/app-utilities/dist/ui/tokens.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@peektravel/app-utilities/dist/ui/odyssey.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@peektravel/app-utilities/dist/ui/index.js"></script>
+  </head>
+  <body>
+    <ody-page-container>
+      <!--
+        Variant switcher: use ody-tabs to show alternative directions in the same file.
+        Verify the exact ody-tabs attributes/slots against ui.md before relying on them.
+      -->
+      <ody-tabs>
+        <!-- ===================== Variant A ===================== -->
+        <section data-tab="Variant A">
+          <ody-section-rows gap-size="24">
+            <ody-card>
+              <h2>App name — Variant A</h2>
+              <p>Describe what this screen does for the user.</p>
+              <ody-button variant="primary" left-icon="plus">Primary action</ody-button>
+            </ody-card>
+
+            <ody-card>
+              <ody-input label="Example field" placeholder="Type here" full-width></ody-input>
+              <ody-money-input label="Price" currency="USD" value="49.99"></ody-money-input>
+            </ody-card>
+
+            <ody-card>
+              <h3>Example data</h3>
+              <ody-table id="demo-table" sortable sticky-header></ody-table>
+            </ody-card>
+          </ody-section-rows>
+        </section>
+
+        <!-- ===================== Variant B ===================== -->
+        <section data-tab="Variant B">
+          <ody-empty-state>
+            <p>Alternative layout for the same feature. Delete unused variants once the user
+               picks a direction.</p>
+          </ody-empty-state>
+        </section>
+      </ody-tabs>
+    </ody-page-container>
+
+    <script type="module">
+      // Rich data is set as JS PROPERTIES (not attributes). See ui.md.
+      const table = document.getElementById('demo-table');
+      if (table) {
+        table.columns = [
+          { key: 'guest', label: 'Guest', sortable: true },
+          { key: 'date', label: 'Date', sortable: true },
+          { key: 'status', label: 'Status' },
+        ];
+        table.data = [
+          { guest: 'Alice', date: '2026-07-01', status: 'Waitlisted' },
+          { guest: 'Bob', date: '2026-07-01', status: 'Confirmed' },
+        ];
+      }
+    </script>
+  </body>
+</html>
