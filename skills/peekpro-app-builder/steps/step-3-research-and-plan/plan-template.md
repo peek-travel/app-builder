@@ -14,6 +14,7 @@
 - **Database:** <e.g. Supabase/Postgres>
 - **Real-time:** <e.g. Supabase Realtime — or N/A>
 - **Language-gate note:** <Node = first-class; or WARNING if non-Node + raw-GraphQL risk>
+- **Testing:** <test runner + coverage tool, e.g. Vitest --coverage>; target **≥90% line coverage**
 
 ## 3. Peek integration (confirm via the MCP — mark TODO(verify) if MCP unavailable)
 - **Webhooks/events consumed:** <event names + payloads> — `ASK THE MCP`

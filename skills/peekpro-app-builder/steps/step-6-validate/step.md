@@ -18,6 +18,10 @@
 - **Secrets:** confirm none are committed; all live in the host secret store / env.
 - **PII:** confirm storage/logging/transit match the plan (no PII or tokens in logs).
 - **Both surfaces:** smoke-test the client-facing app and the admin surface.
+- **Tests & coverage:** run the test suite; confirm it passes and that **line coverage is
+  ≥90%** (report the actual number). Fill meaningful gaps — especially webhook handling, the
+  state-not-change derivation, ID normalization, and `installDataId` scoping — rather than
+  padding with trivial tests.
 
 ## If the MCP is unavailable
 

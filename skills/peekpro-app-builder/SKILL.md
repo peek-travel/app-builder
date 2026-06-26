@@ -101,6 +101,9 @@ building UI).
   Never assume data exists; an app built on absent data won't work.
 - **Don't build before sign-off (step 4), and don't gather the app's purpose before the
   stack (steps 1 → 2).**
+- **Ship with tests.** Install a test suite from the start and target **≥90% line coverage**
+  (meaningful tests over trivial ones), covering the critical Peek logic (webhooks, the
+  state-not-change derivation, ID normalization, `installDataId` scoping, auth).
 - **When unclear, ask — one question at a time.** Never assume (see "How to interact").
 
 ## Agent-neutral note

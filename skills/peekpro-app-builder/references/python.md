@@ -51,5 +51,13 @@ expensive/mutating operations unless necessary, and flag risk per the warning ab
 - Use the host's secret store; never commit tokens. Treat guest/payment data as sensitive
   PII (see `peek-api.md`).
 
+## 6. Testing (target ≥90% line coverage)
+
+- Set up **pytest** with **coverage.py** (`pytest --cov`) from the start; aim for **≥90% line
+  coverage** with meaningful tests.
+- Prioritize the critical Peek logic: your ported webhook parsing, the **state-not-change**
+  create/update derivation, **ID normalization**, `installDataId` scoping, and auth/token
+  handling. Fail the build below the threshold.
+
 `TODO(verify)`: revisit this stub when a Python SDK becomes available — the repo/skill will
 be updated then.

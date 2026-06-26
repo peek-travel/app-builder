@@ -48,5 +48,13 @@ raw-GraphQL risk per the warning above.
 - Use Rails encrypted credentials / the host's secret store; never commit tokens. Treat
   guest/payment data as sensitive PII (see `peek-api.md`).
 
+## 5. Testing (target ≥90% line coverage)
+
+- Set up **RSpec** (or Minitest) with **SimpleCov** from the start; aim for **≥90% line
+  coverage** with meaningful tests.
+- Prioritize the critical Peek logic: your ported webhook parsing, the **state-not-change**
+  create/update derivation, **ID normalization**, `installDataId` scoping, and auth/token
+  handling. Fail the build below the threshold.
+
 `TODO(verify)`: revisit this stub when a Ruby SDK becomes available — the repo/skill will be
 updated then.

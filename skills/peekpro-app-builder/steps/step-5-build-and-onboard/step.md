@@ -38,6 +38,12 @@ step-3 research. Follow the fixed-layer rules from `references/peek-api.md`:
     jsDelivr instead of bundled. Don't hand-roll a different UI kit.
 - Use **placeholders / env vars** for any secret the user is still acquiring, so the build
   keeps moving while Track B catches up.
+- **Write tests as you build — aim for complete coverage.** Set up a test suite for the stack
+  from the start and target **≥90% line coverage** (with a coverage reporter wired up). Cover
+  the critical Peek logic especially: webhook parsing/handling, the **state-not-change**
+  create/update derivation, **ID normalization**, `installDataId` scoping, and auth/token
+  handling. Prefer testing behavior over implementation; don't chase the number with empty
+  tests. See the stack reference for the recommended test tooling.
 
 ## Track B — onboarding walkthrough (the user, in parallel)
 

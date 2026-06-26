@@ -66,7 +66,16 @@ MCP` whether one exists before considering raw GraphQL, and flag the risk to the
   event catalog + signature scheme. `TODO(verify)` header/algorithm.
 - Make handlers **idempotent** (events may be redelivered).
 
-## 6. Secrets & PII
+## 6. Testing (target ≥90% line coverage)
+
+- Set up a test runner from the start (e.g. **Vitest** or **Jest**) with a **coverage
+  reporter** enabled (`--coverage`); research the current best choice for the framework.
+- Aim for **≥90% line coverage** with meaningful tests. Prioritize the critical Peek logic:
+  webhook parsing/handling, the **state-not-change** create/update derivation, **ID
+  normalization** (`B-123ABC` → `b_123abc`), `installDataId` scoping, and auth/token handling.
+- Add a CI step (or npm script) that fails the build below the coverage threshold.
+
+## 7. Secrets & PII
 
 - Use the host's secret manager (e.g. Vercel/Firebase/Fly env + secret stores) — **research
   the current best practice for the chosen host**. Never commit tokens.
