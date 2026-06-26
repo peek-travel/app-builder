@@ -12,6 +12,9 @@ Read with the Read tool — only what applies, to keep context lean:
 
 - **Always:** `references/peek-api.md` — the Peek app model, the three IDs + `installDataId`
   scoping, auth, resources, webhooks, SDK, GraphQL caution.
+- **If the app listens to events:** `references/webhooks.md` — the booking/waiver webhook
+  contract (registry setup, registry-defined GraphQL query, npm standard query + booking-model
+  parser, and the "events carry state, not change" caveat).
 - **Matching stack:** `references/node.md` (preferred) or `references/python.md` /
   `references/rails.md`.
 - **If building UI:** `references/design-guidelines.md`.

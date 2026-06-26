@@ -86,10 +86,18 @@ the client surface acts on behalf of the installing account.
 ### A. Webhooks (inbound — "something happened in Peek")
 
 Peek emits events the app subscribes to. Reactive features (waitlist, abandoned bookings,
-dynamic pricing) depend on these.
+dynamic pricing) depend on these. **Two webhooks are available today: booking events and
+waiver events.** They're configured through the **registry** and delivered to an endpoint the
+app implements.
 
-- `ASK THE MCP` for the **current webhook/event catalog**: event types, payload shapes,
-  delivery guarantees, retry behavior, and **signature/verification** scheme.
+> **See `references/webhooks.md` for the full contract** — registry setup, the
+> registry-defined GraphQL query that shapes the booking payload, the npm package's standard
+> query + booking-model parser, and the critical caveat that booking events carry **state,
+> not change** (use the never-changing booking/order IDs + a seen-before store to derive
+> created/cancelled/rescheduled).
+
+- `ASK THE MCP` for the **current webhook/event catalog**: payload shapes, delivery
+  guarantees, retry behavior, and **signature/verification** scheme.
 - Always **verify webhook signatures** before trusting a payload. `TODO(verify)` signing
   scheme + header name.
 - Expect at-least-once delivery; design handlers to be **idempotent**. `TODO(verify)`.

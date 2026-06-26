@@ -75,8 +75,9 @@ steps 1–2, and don't build before sign-off (step 4).
 | 6 | `steps/step-6-validate/step.md` | Validate against a Peek sandbox; confirm secrets and PII handling. |
 
 The `references/` files are the fixed-layer knowledge those steps pull in:
-`peek-api.md` (always), `node.md`/`python.md`/`rails.md` (matching stack), and
-`design-guidelines.md` (only when building UI).
+`peek-api.md` (always), `webhooks.md` (when the app listens to booking/waiver events),
+`node.md`/`python.md`/`rails.md` (matching stack), and `design-guidelines.md` (only when
+building UI).
 
 ## Hard rules (do not violate)
 
