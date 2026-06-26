@@ -19,6 +19,15 @@ It is the source of truth: every component, its tag, attributes, and usage. (Thi
 
 ## How to include Odyssey
 
+**Use the same Odyssey components for both the step-2 mockup and the real step-5 app UI.**
+Choose the include method by stack:
+
+- **Node (default):** use the **`@peektravel/app-utilities` npm package** (the npm import
+  below). This is the preferred path and the same package family as the Node-first toolchain.
+- **Not Node / not using that npm package:** **fall back to the CDN web components** (the
+  `<head>` snippet below). Same `<ody-*>` components, just loaded from jsDelivr instead of
+  bundled — don't substitute a different UI kit.
+
 ### In a quick single-file mockup / static page (CDN)
 
 ```html

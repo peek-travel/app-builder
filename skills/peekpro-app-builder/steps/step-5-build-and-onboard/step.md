@@ -18,6 +18,14 @@ step-3 research. Follow the fixed-layer rules from `references/peek-api.md`:
 - **Verify webhook signatures; make handlers idempotent.**
 - Build **both surfaces**: the **client-facing** app (installed per Peek account) and the
   **admin** surface (installs, logs, ops for the developer).
+- **Build the UI with Odyssey** — the same `<ody-*>` components used for the step-2 mockup
+  (see `references/design-guidelines.md`; load `docs/ui.md` live for the current contract).
+  - **Node (default):** import them from the **`@peektravel/app-utilities`** npm package
+    (`import '@peektravel/app-utilities/ui'` + its `tokens.css` / `odyssey.css`). This is the
+    preferred path and pairs with the Node-first SDK.
+  - **Not Node / not using that npm package:** **fall back to the Odyssey web components via
+    the CDN includes** (the `<head>` snippet) — the same components, just loaded from
+    jsDelivr instead of bundled. Don't hand-roll a different UI kit.
 - Use **placeholders / env vars** for any secret the user is still acquiring, so the build
   keeps moving while Track B catches up.
 
